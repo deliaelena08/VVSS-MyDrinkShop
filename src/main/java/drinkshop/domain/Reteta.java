@@ -1,5 +1,6 @@
 package drinkshop.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Reteta {
@@ -9,9 +10,13 @@ public class Reteta {
 
     public Reteta(int id, List<IngredientReteta> ingrediente) {
         this.id = id;
-        this.ingrediente = ingrediente;
-
+        this.ingrediente = new ArrayList<>(ingrediente);
     }
+
+    public void setIngrediente(List<IngredientReteta> ingrediente) {
+        this.ingrediente = new ArrayList<>(ingrediente);
+    }
+
 
     public void setId(int id) {
         this.id = id;
@@ -24,10 +29,6 @@ public class Reteta {
 
     public List<IngredientReteta> getIngrediente() {
         return ingrediente;
-    }
-
-    public void setIngrediente(List<IngredientReteta> ingrediente) {
-        this.ingrediente = ingrediente;
     }
 
     @Override

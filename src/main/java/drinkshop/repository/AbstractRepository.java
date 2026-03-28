@@ -17,9 +17,7 @@ public abstract class AbstractRepository<ID, E>
 
     @Override
     public List<E> findAll() {
-        return (List<E>)StreamSupport.stream(entities.values().spliterator(), false).toList();
-//                    .collect(Collectors.toList());
-        // return (List<E>) entities.values();
+        return entities.values().stream().toList();
     }
 
     @Override
@@ -35,6 +33,7 @@ public abstract class AbstractRepository<ID, E>
 
     @Override
     public E update(E entity) {
+        delete(getId(entity));
         entities.put(getId(entity), entity);
         return entity;
     }
