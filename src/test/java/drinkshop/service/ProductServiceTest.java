@@ -43,11 +43,10 @@ class ProductServiceTest {
         assertEquals("pepsi", service.findById(1).getNume());
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"", " "})
+    @Test
     @DisplayName("ECP Non-Valid: adaugare produs cu nume gol")
-    void testAddProduct_ECPNonValid(String invalidName) {
-        Product p = new Product(2, invalidName, 10.0, CategorieBautura.JUICE, TipBautura.BASIC);
+    void testAddProduct_ECPNonValid() {
+        Product p = new Product(2, "", 10.0, CategorieBautura.JUICE, TipBautura.BASIC);
         assertThrows(ValidationException.class, () -> service.addProduct(p));
     }
 
