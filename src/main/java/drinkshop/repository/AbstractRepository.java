@@ -1,9 +1,10 @@
 package drinkshop.repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.StreamSupport;
+import java.util.stream.Collectors;
 
 public abstract class AbstractRepository<ID, E>
         implements Repository<ID, E> {
@@ -17,7 +18,7 @@ public abstract class AbstractRepository<ID, E>
 
     @Override
     public List<E> findAll() {
-        return entities.values().stream().toList();
+        return new ArrayList<>(entities.values());
     }
 
     @Override

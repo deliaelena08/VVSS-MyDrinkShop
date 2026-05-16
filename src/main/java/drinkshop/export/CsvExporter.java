@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CsvExporter {
     public static void exportOrders(List<Product> products, List<Order> orders, String path) {
@@ -18,7 +19,11 @@ public class CsvExporter {
             double sum=0.0;
             for (Order o : orders){
                 for (OrderItem i : o.getItems()) {
-                    Product p = products.stream().filter((p1)->i.getProduct().getId()==p1.getId()).toList().get(0);
+                    // Modificat aici (.collect(Collectors.toList()))
+                    Product p = products.stream()
+                            .filter((p1) -> i.getProduct().getId() == p1.getId())
+                            .collect(Collectors.toList())
+                            .get(0);
                     w.write(o.getId() + "," + p.getNume() + "," + i.getQuantity() + "," + i.getTotal() + "\n");
                 }
                 w.write("total order: "+o.getTotalPrice()+" RON\n");
@@ -28,7 +33,8 @@ public class CsvExporter {
             String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
             w.write("TOTAL OF "+date+" is: "+sum+" RON\n");
         } catch (IOException e) {
-            throw new ExportException("Eroare la scrierea in fisierul " + path + ": " +e);
+            // Asigură-te că ExportException este o excepție definită în proiectul tău, altfel folosește RuntimeException
+            throw new RuntimeException("Eroare la scrierea in fisierul " + path + ": " + e);
         }
     }
 }
